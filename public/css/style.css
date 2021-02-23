@@ -18,7 +18,11 @@ p, footer a,.footer-copyright {
     font-family: 'Roboto', sans-serif; 
 }
 
-
+.errorPage {
+    align-items: center;
+    text-align: center;
+    padding-bottom: 30%;
+}
 
 nav ul a {
     font-size: 1.5rem;
