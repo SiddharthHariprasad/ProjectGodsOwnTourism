@@ -3,7 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-mongoose.connect('mongodb+srv://sid:Siddhu99@cluster0.43ns8.mongodb.net/GodsOwnTourism?retryWrites=true&w=majority');
+const URI = 'mongodb+srv://sid:Siddhu99@cluster0.43ns8.mongodb.net/GodsOwnTourism?retryWrites=true&w=majority';
+
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 let db = mongoose.connection;
 
 // Check connection
@@ -18,10 +20,6 @@ db.on('error', (err) => {
 
 // Init App
 const app = express();
-
-// Load View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 // Body Parser Middleware
 // parse application/x-www-form-urlencoded
