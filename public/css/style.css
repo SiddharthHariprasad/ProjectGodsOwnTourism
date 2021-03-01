@@ -62,3 +62,14 @@ section > div > a {
     font-size:large;
 }
 
+.card-content {
+    font-size: 1.5em;
+}
+
+.card-image {
+    height: 350px;
+}
+
+.hotel-card-title {
+    font-size: 1.5em;
+}
