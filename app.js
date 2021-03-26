@@ -3,7 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const URI = 'mongodb+srv://sid:Siddhu99@cluster0.43ns8.mongodb.net/GodsOwnTourism?retryWrites=true&w=majority';
+const URI = 'mongodb+srv://Sid:Siddhu99@cluster0.gu1zj.mongodb.net/GodsOwnTourism?retryWrites=true&w=majority';
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 let db = mongoose.connection;
