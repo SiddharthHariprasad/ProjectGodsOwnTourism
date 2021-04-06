@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta name="description" content="God's Own Tourism is a website geared towards simplifying the travel experience. We offer tickets, travel packages, hotels, cabs and guides all under one roof.">
+    <meta name="keywords" content="god's own tourism, tourism, travel, tickets, cabs, hotels, tour, tour packages, guides, tour guides, kerala tourism">
+
+    <!-- Including Fontawesome -->
+    <script src="https://kit.fontawesome.com/a2643c6685.js" crossorigin="anonymous"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!-- Importing Custom CSS -->
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+
+    <title>God's Own Tourism</title>
+</head>
+<body>
+    <!-- Navbar (header region of the visible body) -->
+    <header>
+        <!-- Nav to hold the navbar -->
+        <nav class="nav-wrapper black">
+            <!-- container div for centering and styling easily center -->
+            <div class="container">
+                <!-- menu icon (3 lines) for sidenav-bar in small screens -->
+                <a href="" class="sidenav-trigger teal-text" data-target="mobile-menu"><i class="material-icons">menu</i></a>
+                <!-- Website name with link to homepage-->
+                <a href="/" id="logoBig" class="brand-logo teal-text hide-on-small-only">God's Own Tourism</a>
+                <a href="/" id="logoSmall" class="brand-logo teal-text hide-on-med-and-up">God's Own Tourism</a>
+                <!-- Links to different pages of the website (links in navbar for large screens) -->
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="packages.html" class="teal-text waves-effect waves-light">Packages</a></li>
+                    <li><a href="tickets.html" class="teal-text waves-effect waves-light">Tickets</a></li>
+                    <li><a href="hotels.html" class="teal-text waves-effect waves-light">Hotels</a></li>
+                    <li><a href="cabs.html" class="teal-text waves-effect waves-light">Cabs</a></li>
+                    <li><a href="guides.html" class="teal-text waves-effect waves-light">Guides</a></li>
+                    <li><a href="about.html" class="teal-text waves-effect waves-light">About Us</a></li>
+                </ul>
+                <!-- Links to different pages of the website (links in side-navbar for medium and smaller screens) -->
+                <ul id="mobile-menu" class="sidenav teal accent-3">
+                    <li><a href="packages.html" class="waves-effect waves-dark">Packages</a></li>
+                    <li><a href="tickets.html" class="waves-effect waves-dark">Tickets</a></li>
+                    <li><a href="hotels.html" class="waves-effect waves-dark">Hotels</a></li>
+                    <li><a href="cabs.html" class="waves-effect waves-dark">Cabs</a></li>
+                    <li><a href="guides.html" class="waves-effect waves-dark">Guides</a></li>
+                    <li><a href="about.html" class="waves-effect waves-dark">About Us</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- main content div that can be modified to dynamically include content (dynamicity not yet set up) -->
+    <div id="main-content">
+        <!-- Photo Carousel -->
+        <div class="carousel-holder black" id="image-carousel">
+            <!-- carousel div where the links and images -->
+            <div class="carousel carousel-slider center">
+                <!-- links that become images -->
+                <a class="carousel-item black carousel-image-1" href="packages.html"></a>
+                <a class="carousel-item black carousel-image-2" href="guides.html"></a>
+            </div>
+        </div>
+
+        <!-- Serivces (section to hold all services (divs) for styling and targeting together and also for centering) -->
+        <section class="container section" id="services">
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="packages">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="packages.html">
+                    <!-- First column -->
+                    <div class="col s12 l4">
+                        <h2>Packages</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l6 offset-l2">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo illo a atque minus sed sit assumenda! Beatae, sint quibusdam perferendis laborum aliquam dolorem voluptatum inventore ab, aut facilis hic exercitationem.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="tickets">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="tickets.html">
+                    <!-- First column -->
+                    <div class="col s12 l4 push-l6">
+                        <h2>Tickets</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l4 pull-l5 right-align offset-l2">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda voluptate voluptates magnam nisi voluptatum impedit molestias ducimus recusandae aliquid quia nesciunt labore dolorem, odit quo eos. Itaque numquam quidem voluptates?
+                    </p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="hotels">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="hotels.html">
+                    <!-- First column -->
+                    <div class="col s12 l4">
+                        <h2>Hotels</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l6 offset-l2">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum possimus dignissimos harum quam modi, est quibusdam eaque pariatur laborum suscipit unde corrupti similique maxime aliquam, veniam accusantium nulla alias assumenda?
+                        </p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="cabs">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="cabs.html">
+                    <!-- First column -->
+                    <div class="col s12 l4 push-l6">
+                        <h2>Cabs</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l4 pull-l5 right-align offset-l2">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, vero sit labore cumque ratione veritatis! Suscipit, exercitationem nihil pariatur aperiam voluptatum alias dignissimos aut fugit minus maxime libero quos delectus?
+                        </p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="guides">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="guides.html">
+                    <!-- First column -->
+                    <div class="col s12 l4">
+                        <h2>Guides</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l6 offset-l2">
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem eum ipsam quidem minus commodi inventore omnis, nemo quae cum, consequatur libero ea nostrum odio mollitia enim nulla atque fugit dignissimos.
+                        </p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- New Row for splitting to 2 columns for side by side layout of service name and description -->
+            <div class="row" id="about">
+                <!-- link to enclose the name and description so that when it is clicked it take user to the respective page -->
+                <a href="about.html">
+                    <!-- First column -->
+                    <div class="col s12 l4 push-l6">
+                        <h2>About Us</h2>
+                    </div>
+                    <!-- Second column -->
+                    <div class="col s12 l4 pull-l5 right-align offset-l2">
+                        <p>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et qui voluptatibus aliquid, quae ipsam est labore enim dolore harum id ipsa amet magnam, obcaecati laudantium voluptatum veniam accusamus soluta quasi.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Parallax -->
+        <div class="parallax-container">
+            <div class="parallax">
+                <img src="images/tractor.jpg" alt="" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Feedback -->
+        <section class="container section" id="feedback">
+            <!-- new row inside the section for feedback title -->
+            <div class="row center-align">
+                <!-- first column full size -->
+                <div class="col s12">
+                    <h2>Feedback</h2>
+                </div>
+            </div>
+            <!-- new row for feedbacks -->
+            <div class="row center-align">
+                <!-- first column -->
+                <div class="col s12 l6">
+                    <!-- card div to give it card like styling -->
+                    <div class="card-panel teal center-align">
+                        <!-- content of the card -->
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est tempore reprehenderit aut esse iure laborum fugit quisquam sequi cumque aliquid. Provident unde explicabo eaque nihil atque earum id, minima quibusdam.
+                        </p>
+                    </div>
+                </div>
+                <!-- second column -->
+                <div class="col s12 l6">
+                    <!-- card div to give it card like styling -->
+                    <div class="card-panel teal center-align">
+                        <!-- content of the card -->
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem deserunt dignissimos dolores fuga. Quidem, id, temporibus esse quos officiis ipsam explicabo sit tempora labore sapiente provident sint quis iste est.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parallax -->
+        <div class="parallax-container">
+            <div class="parallax">
+                <img src="images/tea.jpg" alt="" class="responsive-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer black teal-text">
+        <!-- container div for centering and targeting  -->
+        <div class="container">
+            <!-- new row -->
+            <div class="row">
+                <!-- new coolumn -->
+                <div class="col s12 l4 center">
+                    <!--terms and conditions -->
+                    <div id="termsandconditions">
+                        <br>
+                        <!-- button for terms and conditions -->
+                        <a href="#terms" class="btn teal accent-3 black-text center-align modal-trigger">TERMS & CONDITIONS</a>
+                        
+                        <!-- the popup for terms and conditions -->
+                        <div class="modal" id="terms">
+                            <!-- content of popup -->
+                            <div class="modal-content">
+                                <h4>Terms & Conditions</h4>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, exercitationem perferendis. Reiciendis earum porro, laborum deserunt autem nisi! Quia culpa ipsa suscipit cupiditate vitae a obcaecati nobis odit quam commodi.
+                                </p>
+                            </div>
+                            <!-- footer of popup -->
+                            <div class="modal-footer">
+                                <!-- agree and close button -->
+                                <a href="#" class="modal-close btn teal accent-3 black-text">AGREE & CLOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- privacy policy -->
+                    <div id="privacypolicy">
+                        <br>
+                        <!-- button for privacy policy -->
+                        <a href="#privacy" class="btn teal accent-3 black-text center-align modal-trigger">PRIVACY POLICY</a>
+                        
+                        <!-- popup for privacy policy -->
+                        <div class="modal" id="privacy">
+                            <!-- content for popup -->
+                            <div class="modal-content">
+                                <h4>Privacy Policy</h4>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis excepturi nisi incidunt esse ea dolorum ab itaque non. Nobis maiores suscipit nihil eligendi necessitatibus cumque accusantium, eum esse eveniet iusto?
+                                </p>
+                            </div>
+                            <!-- footer of popup -->
+                            <div class="modal-footer">
+                                <!-- agree and close button -->
+                                <a href="#" class="modal-close btn teal accent-3 black-text">AGREE & CLOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- contact us section -->
+                <div class="col s12 l4 contact-us center">
+                    <!-- heading for contact us section -->
+                    <h5>Contact Us</h5>
+                    
+                    <!-- links to various contacting options -->
+                    <a href="tel:+91819357648" class="btn-floating btn-small teal darken-3">
+                        <i class="material-icons">phone</i>
+                    </a>
+                    <a href="sms:+91819357648&amp;body=Hey%20there%2C%20I%20visited%20your%20website%20and%20I%27d%20like%20to%20know%20more%20about%20your%20services." 
+                    class="btn-floating btn-small teal darken-3">
+                        <i class="material-icons">sms</i>
+                    </a>
+                    <a href="mailto:siddhuhariprasad@gmail.com" class="btn-floating btn-small teal darken-3">
+                        <i class="material-icons">mail</i>
+                    </a>
+                </div>
+
+                <!-- social media section -->
+                <div class="col s12 l4 socials center">
+                    <!-- heading for social media icons -->
+                    <h5>Connect with us on</h5>
+
+                    <!-- links to various social medias -->
+                    <a href="https://www.instagram.com/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://wa.me/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://t.me/" target="_blank" class="btn-floating btn-small teal darken-3">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- copyright -->
+        <div class="footer-copyright black">
+            <div class="container center-align">&copy; 2021 God's Own Toursim</div>
+        </div>
+    </footer>
+
+
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- Inculding Custom Script -->
+    <script type="text/javascript" src='js/script.js'></script>
+</body>
+</html>
