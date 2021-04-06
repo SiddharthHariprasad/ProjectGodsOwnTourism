@@ -41,13 +41,13 @@ nav .brand-logo {
 }
 
 .carousel-image-1 {
-    background-image: url("../images/tea.jpg");
+    background-image: url("../src/components/images/tea.jpg");
     background-size: cover;
     background-position: center;
 }
 
 .carousel-image-2 {
-    background-image: url("../images/tractor.jpg");
+    background-image: url("../src/components/images/tractor.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -60,6 +60,10 @@ section > div > a {
 
 #logoSmall {
     font-size:large;
+}
+
+#logoBig {
+  font-size:2em;
 }
 
 .card-content {
