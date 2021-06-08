@@ -1,11 +1,10 @@
 import express from 'express';
 
-import { getUsers, postUser, updateUser, deleteUser } from '../controllers/users.js';
+import { signin, signup } from '../controllers/users.js';
 
 const router = express.Router();
 
-router.get('/', getUsers);
-router.post('/', postUser);
-router.patch('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.post('/signin', signin);
+router.post('/signup', signup);
+
 export default router;

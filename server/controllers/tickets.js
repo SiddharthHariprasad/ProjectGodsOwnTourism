@@ -2,7 +2,7 @@ import TicketDetails from '../models/TicketDetails.js'
 
 export const getTickets = async (req, res) => {
     try {
-        const ticketDetails = await TicketDetails.find();
+        const ticketDetails = await TicketDetails.find().sort({ ticketsID: -1 });
 
         res.status(200).json(ticketDetails);
     } catch (error) {
@@ -13,7 +13,7 @@ export const getTickets = async (req, res) => {
 export const postTicket = async (req, res) => {
     const ticket = req.body; 
 
-    const newTicket = new TicketDetails(ticket);
+    const newTicket = new TicketDetails({ ...ticket, ticketCreator: req.userId, ticketCreatedAt: new Date().toISOString() });
     try {
         await newTicket.save();
         res.status(201).json(newTicket);
@@ -30,18 +30,18 @@ export const updateTicket = async (req, res) => {
         return res.status(404).send('No Ticket with that ID');
     } else {
         const selectedTicket = await TicketDetails.find({ticketID: tID}).select('_id');
-        const updatedTicket = await TicketDetails.findByIdAndUpdate(selectedTicket, ticket, { new: true });
+        const updatedTicket = await TicketDetails.findByIdAndUpdate(selectedTicket, { ...ticket, ticketCreator: req.userId, ticketCreatedAt: new Date().toISOString() }, { new: true });
         res.json(updatedTicket);
     }
 }
 
 export const deleteTicket = async (req, res) => {
     const { id: tID } = req.params;
-    const existCheck = await CabDetails.exists({ ticketID: tID });
+    const existCheck = await TicketDetails.exists({ ticketID: tID });
     if (!existCheck) {
-        return res.status(404).send('No Cab with that ID');
+        return res.status(404).send('No Ticket with that ID');
     } else {
-        const selectedCab = await CabDetails.find({ticketID: tID}).select('_id');
+        const selectedTicket = await TicketDetails.find({ticketID: tID}).select('_id');
         await TicketDetails.findByIdAndRemove(selectedTicket);
         res.json({ message: 'Post Deleted successfully' });
     }

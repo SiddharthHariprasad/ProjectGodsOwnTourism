@@ -2,7 +2,7 @@ import GuideDetails from '../models/GuideDetails.js'
 
 export const getGuides = async (req, res) => {
     try {
-        const guideDetails = await GuideDetails.find();
+        const guideDetails = await GuideDetails.find().sort({ guideID: -1 });
 
         res.status(200).json(guideDetails);
     } catch (error) {
@@ -13,7 +13,7 @@ export const getGuides = async (req, res) => {
 export const postGuide = async (req, res) => {
     const guide = req.body; 
 
-    const newGuide = new GuideDetails(guide);
+    const newGuide = new GuideDetails({ ...guide, guideCreator: req.userId, guideCreatedAt: new Date().toISOString()});
     try {
         await newGuide.save();
         res.status(201).json(newGuide);
@@ -30,7 +30,7 @@ export const updateGuide = async (req, res) => {
         return res.status(404).send('No Guide with that ID');
     } else {
         const selectedGuide = await GuideDetails.find({guideID: gID}).select('_id');
-        const updatedGuide = await GuideDetails.findByIdAndUpdate(selectedGuide, guide, { new: true });
+        const updatedGuide = await GuideDetails.findByIdAndUpdate(selectedGuide, { ...guide, guideCreator: req.userId, guideCreatedAt: new Date().toISOString()}, { new: true });
         res.json(updatedGuide);
     }
 }

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { TextInput, Select, Button, Icon, Card } from 'react-materialize';
 
 const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) => {
 
     const [editData, setEditData] = useState({
         editID: '', editCategory: '', roomEditID: ''
     });
+
+    const user = JSON.parse(localStorage.getItem('profile'));
+
 
     const history = useHistory();
 
@@ -22,7 +26,6 @@ const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) 
                     break;
                 case "hotel":
                     document.getElementById('roomIDForm').removeAttribute('hidden');
-                    // history.push('/FormHotel');
                     break;
                 case "cab":
                     history.push('/FormCab');
@@ -39,7 +42,7 @@ const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) 
         }
     };
 
-    const roomIDFromSubmit = (e) => {
+    const roomIDFormSubmit = (e) => {
         e.preventDefault();
         if (editData.roomEditID) {
             const warningID = 'warning1';
@@ -54,47 +57,48 @@ const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) 
         }
     }
 
+    if (!user) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In</a>]}>
+                        <span>Please Login to Proceed</span>
+                    </Card>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div id="main-content">
             <div className="container editFormPage">
                 <h1 className="center">Edit Form</h1>
                 <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
-                    <div className="input-field">
-                        <label htmlFor="editID">Enter ID</label>
-                        <input placeholder="Enter ID of Object to Edit" className="validate" id="editID" type="text" value={editData.editID} onChange={(e) => setEditData({ ...editData, editID: e.target.value.toUpperCase() })} /><br/>
-                        <span id="warning" hidden>This field is requires!</span>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="btn">Choose the category:</label><br />
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setEditData({ ...editData, editCategory: "package"}); setCurrentId(editData.editID);}} name="category">Packages
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setEditData({ ...editData, editCategory: "ticket"}); setCurrentId(editData.editID);}} name="category">Tickets
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setEditData({ ...editData, editCategory: "hotel"}); setCurrentId(editData.editID);}} name="category">Hotels
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setEditData({ ...editData, editCategory: "cab"}); setCurrentId(editData.editID);}} name="category">Cabs
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setEditData({ ...editData, editCategory: "guide"}); setCurrentId(editData.editID);}} name="category">Guides
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                    </div>
+                    <TextInput id="editID" label="ID" placeholder="Enter ID of Object to Edit" validate value={editData.editID} onChange={(e) => setEditData({ ...editData, editID: e.target.value.toUpperCase() })} />
+                    <span id="warning" hidden>This field is requires!</span><br /><br/>
+                    <Select
+                    id="category"
+                    label="Choose the category"
+                    multiple={false}
+                    options={{ classes: '', dropdownOptions: { alignment: 'left', autoTrigger: true, closeOnClick: true, constrainWidth: true, coverTrigger: true, hover: false, inDuration: 150, onCloseEnd: null, onCloseStart: null, onOpenEnd: null, onOpenStart: null, outDuration: 250 }}}
+                    onChange={(e) => {setEditData({ ...editData, editCategory: e.target.value}); setCurrentId(editData.editID);}}
+                    >
+                        <option value="">Select One</option>
+                        <option value="package">Packages</option>
+                        <option value="ticket">Tickets</option>
+                        <option value="hotel">Hotels</option>
+                        <option value="cab">Cabs</option>
+                        <option value="guide">Guides</option>
+                    </Select>
+                    <Button node="button" type="submit" waves="light">Submit<Icon right>send</Icon></Button>
                 </form>
-                <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFromSubmit}>
-                <div className="input-field">
-                        <label htmlFor="roomEditID">Enter Room ID</label>
-                        <input placeholder="Enter ID of Room to Edit" className="validate" id="roomEditID" type="text" value={editData.roomEditID} onChange={(e) => setEditData({ ...editData, roomEditID: e.target.value.toUpperCase() })} /><br/>
-                        <span id="warning1" hidden>This field is required!</span>
-                    </div>
-                    <div className="input-field">
-                        <button className="btn waves-effect waves-light" onClick={(e) => setCurrentRoomId(editData.roomEditID)} name="submit" type="submit">Submit
-                            <i className="material-icons right">send</i>
-                        </button>&nbsp;
-                    </div>
+                <br />
+                <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFormSubmit}>
+                    <TextInput id="roomEditID" label="Room ID" placeholder="Enter ID of Room to Edit" validate value={editData.roomEditID} onChange={(e) => setEditData({ ...editData, roomEditID: e.target.value.toUpperCase() })}/>
+                    <span id="warning1" hidden>This field is required!</span><br /><br />
+                    <Button node="button" type="submit" waves="light" onClick={(e) => setCurrentRoomId(editData.roomEditID)}>Submit<Icon right>send</Icon></Button>
                 </form>
+                <br />
             </div>
         </div>
     );

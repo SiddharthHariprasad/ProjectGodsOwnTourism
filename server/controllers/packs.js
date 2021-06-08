@@ -2,7 +2,7 @@ import PackDetails from '../models/PackDetails.js'
 
 export const getPacks = async (req, res) => {
     try {
-        const packDetails = await PackDetails.find();
+        const packDetails = await PackDetails.find().sort({ packID: -1 });
 
         res.status(200).json(packDetails);
     } catch (error) {
@@ -13,7 +13,7 @@ export const getPacks = async (req, res) => {
 export const postPack = async (req, res) => {
     const pack = req.body; 
 
-    const newPack = new PackDetails(pack);
+    const newPack = new PackDetails({ ...pack, packCreator: req.userId, packCreatedAt: new Date().toISOString() });
     try {
         await newPack.save();
         res.status(201).json(newPack);
@@ -30,7 +30,7 @@ export const updatePack = async (req, res) => {
         return res.status(404).send('No Pack with that ID');
     } else {
         const selectedPack = await PackDetails.find({packID: pID}).select('_id');
-        const updatedPack = await PackDetails.findByIdAndUpdate(selectedPack, pack, { new: true });
+        const updatedPack = await PackDetails.findByIdAndUpdate(selectedPack, { ...pack, packCreator: req.userId, packCreatedAt: new Date().toISOString() }, { new: true });
         res.json(updatedPack);
     }
 }

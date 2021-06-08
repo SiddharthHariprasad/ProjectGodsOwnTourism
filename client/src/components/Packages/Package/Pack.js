@@ -1,31 +1,33 @@
-import { Link } from "react-router-dom";
 import React from 'react';
+import { Card, CardTitle, Icon } from 'react-materialize';
 
 const Pack = ({ pack }) => {
     return (
-        <div className="card black white-text sticky-action">
-            <div className="card-image waves-effect waves-block waves-light">
-                <img className="activator" src={pack.packPhoto} alt="Package Name"/>
-            </div>
-            <div className="card-content">
-                <span className="card-title activator teal-text text-darken-2">{pack.packName}<i className="material-icons right">more_vert</i></span>
-            </div>
-            <div className="card-action">
-                <Link to="#" className="teal-text"><i className="material-icons tiny">add_shopping_cart</i>Add to Cart</Link>
-            </div>
-            <div className="card-reveal black teal-text text-lighten-2">
-                <span className="card-title teal-text text-darken-2">{pack.packName}<i className="material-icons right">close</i></span>
-                <p>Here is some more information about this package.<br /><br />
-                        <b>Ticket ID: </b>{pack.ticketID}<br />
-                        <b>Hotel ID: </b>{pack.hotelID}<br />
-                        <b>Room ID: </b>{pack.roomID}<br />
-                        <b>Cab ID: </b>{pack.cabID}<br />
-                        <b>Guide ID: </b>{pack.guideID}<br />
-                    <span><b>Availability: </b>{pack.packAvailability}</span><br /><br />
-                    <span className="white-text"><b>Cost: &#8377;{pack.packCost}</b></span><br />
-                </p>
-            </div>
-        </div>
+        <Card
+            className="black teal-text text-accent-4"
+            closeIcon={<Icon>close</Icon>}
+            header={<CardTitle image={pack.packPhoto} reveal waves="light">{pack.packName}</CardTitle>}
+            reveal={
+                <>
+                    <span>Here is some more information about {pack.packName}.</span>
+                    <ul>
+                        <li><b>Ticket ID: </b>{pack.ticketID}</li>
+                        <li><b>Hotel ID: </b>{pack.hotelID}</li>
+                        <li><b>Room ID: </b>{pack.roomID}</li>
+                        <li><b>Cab ID: </b>{pack.cabID}</li>
+                        <li><b>Guide ID: </b>{pack.guideID}</li>
+                    <li><b>Availability: </b>{pack.packAvailability}</li>
+                    <li className="white-text"><b>Cost: &#8377;{pack.packCost}</b></li>
+                </ul>
+                </>}
+            revealIcon={<Icon>more_vert</Icon>}
+            title={pack.packName}
+            actions={[
+                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+            ]}
+            >
+               <span>{pack.packDetails}</span> 
+        </Card>
     );
 };
 

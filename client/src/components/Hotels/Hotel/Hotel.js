@@ -1,28 +1,27 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Card, CardTitle, Icon } from 'react-materialize';
 
 const Hotel = ({ hotel }) => {
+    
     return (
-        <div className="card black teal-text">
-            <div className="card-image">
-                <img alt="hotel" src={hotel.hotelPhoto}  height="340px" />
-            </div>
-            <div className="card-content center">
-                <span className="hotel-card-title"><b>{hotel.hotelName}</b></span><br />
-                <span>{hotel.hotelDetails}</span><br />
-                <span className="hotel-card-title">{hotel.roomType} Room</span>
-            </div>
-            <div className="card-image">
-                <img alt="room" src={hotel.roomPhoto}  height="340px" />
-            </div>
-            <div className="card-content center">
-                <span><b>Facilities: </b>{hotel.facilities}</span><br />
-                <span className="white-text"><b>Cost: &#8377;{hotel.roomCost}</b></span>
-                <div className="card-action">
-                    <Link to="#" className="teal-text"><i className="material-icons tiny">add_shopping_cart</i>Add to Cart</Link>
-                </div>
-            </div>
-        </div>
+        <Card
+            className="black teal-text text-accent-4"
+            closeIcon={<Icon>close</Icon>}
+            header={<CardTitle image={hotel.hotelPhoto} alt="hotel" reveal waves="light">{hotel.hotelName}</CardTitle>}
+            reveal={
+                <>
+                    <img alt="room" src={hotel.roomPhoto}  width="100%"/>
+                    <b>Facilities: </b><ul>{hotel.facilities.map((facility) => (<li key={facility}>&#9899;{facility}</li>))}</ul>
+                    <span className="white-text"><b>Cost: &#8377;{hotel.roomCost}</b></span>
+                </>}
+            revealIcon={<Icon>more_vert</Icon>}
+            title={`${hotel.roomType} Room`}
+            actions={[
+                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+            ]}
+            >
+                {hotel.hotelDetails}
+        </Card>
     );
 };
 

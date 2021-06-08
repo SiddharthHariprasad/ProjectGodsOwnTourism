@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTickets, putTicket, updateTicket } from '../../actions/tickets'
+import { deleteTicket, getTickets, putTicket, updateTicket } from '../../actions/tickets'
+import { Preloader, TextInput, Button, Icon, Card } from 'react-materialize';
 
-const FormTicket = ({ currentId, setCurrentId }) => {
+const FormTicket = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId }) => {
 
     const [ticketData, setTicketData] = useState({
         ticketID: '', ticketType: '', departure: '', destination: '', seatsAvailable: '', date: '', time: '', ticketCost: '',
     });
+
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const dispatch = useDispatch();
 
@@ -16,11 +19,17 @@ const FormTicket = ({ currentId, setCurrentId }) => {
 
     const ticket = useSelector((state) => currentId ? state.tickets.find((g) => g.ticketID === currentId) : null);
 
+    const ticketDel = useSelector((state) => currentDeleteId ? state.tickets.find((t) => t.ticketID === currentDeleteId) : null);
+
     const tickets = useSelector((state) => state.tickets);
 
     useEffect(() => {
         if (ticket) setTicketData(ticket);
     }, [ticket])
+
+    useEffect(() => {
+        if (ticketDel) setTicketData(ticketDel);
+    }, [ticketDel])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -79,22 +88,26 @@ const FormTicket = ({ currentId, setCurrentId }) => {
         const validated = validate();
         var updateSuccess = document.getElementById('updateSuccess');
         var createSuccess = document.getElementById('createSuccess');
+        var deleteSuccess = document.getElementById('deleteSuccess');
         if(currentId && validated) {
-            dispatch(updateTicket(currentId, ticketData));
+            dispatch(updateTicket(currentId, { ...ticketData, ticketCreatorName: user?.result?.name }));
             setCurrentId(null);
             updateSuccess.removeAttribute('hidden');
-            setTimeout(() => updateSuccess.setAttribute('hidden',""), 3000);
-            clear();
+            setTimeout(() => {updateSuccess.setAttribute('hidden',""); clear();}, 3000);
+        } else if (currentDeleteId && validated) {
+            dispatch(deleteTicket(currentDeleteId));
+            setCurrentDeleteId(null);
+            deleteSuccess.removeAttribute('hidden');
+            setTimeout(() => { deleteSuccess.setAttribute('hidden', ""); clear(); }, 3000);
         } else if(validated) {
             formater();
-            const ticketExistCheck = tickets.find((c) => c.ticketID === ticketData.ticketID)? true : false;
+            const ticketExistCheck = tickets.find((t) => t.ticketID === ticketData.ticketID)? true : false;
             if (ticketExistCheck) {
                 alert('Ticket with the same Ticket ID already exists, if you want to update please go to /EditForm, if you want to delete please go to /DeleteForm');
             } else {
-                dispatch(putTicket(ticketData));
+                dispatch(putTicket({ ...ticketData, ticketCreatorName: user?.result?.name }));
                 createSuccess.removeAttribute('hidden');
-                setTimeout(() => createSuccess.setAttribute('hidden',""), 3000);
-                clear();
+                setTimeout(() => {createSuccess.setAttribute('hidden',""); clear();}, 3000);
             }
         }
     };
@@ -103,80 +116,98 @@ const FormTicket = ({ currentId, setCurrentId }) => {
         window.open("/FormTicket","_self");
     };
 
-    return (
-        ticket !== null && ticketData.ticketID ==='' ?  
-            <div id="main-content" className="loaderPage">
-                <div className="preloader-wrapper big active">
-                    <div className="spinner-layer spinner-teal-only">
-                        <div className="circle-clipper left">
-                            <div className="circle"></div>
-                        </div>
-                        <div className="gap-patch">
-                            <div className="circle"></div>
-                        </div>
-                        <div className="circle-clipper right">
-                            <div className="circle"></div>
-                        </div>
+    if (!user) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In</a>]}>
+                        <span>Please Login to Proceed</span>
+                    </Card>
+                </div>
+            </div>
+        )
+    }
+
+    if ( currentId || currentDeleteId ) {
+        if(user?.result?.googleId !== ticket?.ticketCreator && user?.result._id !== ticket.ticketCreator) {
+            return (
+                <div id="main-content" className="container errorPage">
+                    <div className="container">
+                        <Card className="black" textClassName="teal-text text-accent-3" title="Access Denied" actions={[<a className="white-text btn btn-large" key="1" href={currentId?"/EditForm":"/DeleteForm"}>Go Back</a>]}>
+                            <span>You don't have permission to access this item.</span>
+                        </Card>
                     </div>
-                </div> 
+                </div>
+            ) 
+        }
+    }
+   
+    return (
+        (ticket !== null || ticketDel !== null) && ticketData.ticketID ==='' ?  
+            <div id="main-content" className="loaderPage">
+                <Preloader active size="big" flashing={false} color="green" />
             </div>
         : (
-            <div id="main-content">
-                <div className="container">
-                    <div id="updateSuccess" className="success" hidden>Ticket Updated Sucessfully!</div>
-                    <div id="createSuccess" className="success" hidden>Ticket Created Sucessfully!</div>
-                    <h1 className="center">Input Form</h1>
-                    <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
-                        <div className="input-field">
-                            <label htmlFor="ticketID">Ticket ID</label>
-                            <input placeholder="Enter Ticket ID" className="validate" id="ticketID" type="text" value={ticketData.ticketID} onChange={(e) => setTicketData({ ...ticketData, ticketID: e.target.value })} /><br/>
-                            <span id="warning0" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="ticketType">Ticket Type</label>
-                            <input placeholder="Enter Ticket Type" className="validate" id="ticketType" type="text" value={ticketData.ticketType} onChange={(e) => setTicketData({ ...ticketData, ticketType: e.target.value })} /><br/>
-                            <span id="warning1" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="departure">Departure</label>
-                            <input placeholder="Enter Departure" className="validate" id="departure" type="text" value={ticketData.departure} onChange={(e) => setTicketData({ ...ticketData, departure: e.target.value })} /><br/>
-                            <span id="warning2" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="destination">Destination</label>
-                            <input placeholder="Enter Destination" className="validate" id="destination" type="text" value={ticketData.destination} onChange={(e) => setTicketData({ ...ticketData, destination: e.target.value })} /><br/>
-                            <span id="warning3" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="seatsAvailable">Seats Available</label>
-                            <input placeholder="Enter Seats Available" className="validate" id="seatsAvailable" type="number" value={ticketData.seatsAvailable} onChange={(e) => setTicketData({ ...ticketData, seatsAvailable: e.target.value })} /><br/>
-                            <span id="warning4" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="date">Date</label>
-                            <input placeholder="Enter Date" className="validate" id="date" type="text" value={ticketData.date} onChange={(e) => setTicketData({ ...ticketData, date: e.target.value })} /><br/>
-                            <span id="warning5" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="time">Time</label>
-                            <input placeholder="Enter Time" className="validate" id="time" type="text" value={ticketData.time} onChange={(e) => setTicketData({ ...ticketData, time: e.target.value })} /><br/>
-                            <span id="warning6" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="ticketCost">Cost</label>
-                            <input placeholder="Enter Cost per day" className="validate" id="ticketCost" type="number" value={ticketData.ticketCost} onChange={(e) => setTicketData({ ...ticketData, ticketCost : e.target.value })} /><br/>
-                            <span id="warning7" hidden>This field is required!</span>
-                        </div>
-                        <div className="input-field">
-                            <button className="btn waves-effect waves-light" type="submit" name="action">Submit
-                                <i className="material-icons right">send</i>
-                            </button>&nbsp;
-                            <button className="btn waves-effect waves-light" onClick={clear}>Clear
-                                <i className="material-icons right">refresh</i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            <div id="main-content" className="container">
+                <div id="updateSuccess" className="success" hidden>Ticket Updated Sucessfully!</div>
+                <div id="createSuccess" className="success" hidden>Ticket Created Sucessfully!</div>
+                <div id="deleteSuccess" className="success" hidden>Cab Deleted Sucessfully!</div>
+                <h1 className="center">Input Form</h1>
+                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                    <TextInput id="ticketID" label="Ticket ID" placeholder="Enter Ticket ID" className="validate" value={ticketData.ticketID} onChange={(e) => setTicketData({ ...ticketData, ticketID: e.target.value })} />
+                    <span id="warning0" hidden>This field is required!</span><br /><br />
+                    <TextInput id="ticketType" label="Ticket Type" placeholder="Enter Ticket Type" validate value={ticketData.ticketType} onChange={(e) => setTicketData({ ...ticketData, ticketType: e.target.value })} />
+                    <span id="warning1" hidden>This field is required!</span><br /><br />
+                    <TextInput id="departure" label="Departure" placeholder="Enter Departure" validate value={ticketData.departure} onChange={(e) => setTicketData({ ...ticketData, departure: e.target.value })} />
+                    <span id="warning2" hidden>This field is required!</span><br /><br />
+                    <TextInput id="destination" label="Destination" placeholder="Enter Destination" validate value={ticketData.destination} onChange={(e) => setTicketData({ ...ticketData, destination: e.target.value })} />
+                    <span id="warning3" hidden>This field is required!</span><br /><br />
+                    <TextInput id="seatsAvailable" label="Seats Available" placeholder="Enter Seats Available" validate type="number" value={ticketData.seatsAvailable} onChange={(e) => setTicketData({ ...ticketData, seatsAvailable: e.target.value })} />
+                    <span id="warning4" hidden>This field is required!</span><br /><br />
+                    <TextInput id="date" label="Date" placeholder="Enter Date" validate value={ticketData.date} onChange={(e) => setTicketData({ ...ticketData, date: e.target.value })} />
+                    <span id="warning5" hidden>This field is required!</span><br /><br />
+                    <TextInput id="time" label="Time" placeholder="Enter Time" validate value={ticketData.time} onChange={(e) => setTicketData({ ...ticketData, time: e.target.value })} />
+                    <span id="warning6" hidden>This field is required!</span><br /><br />
+                    <TextInput id="ticketCost" label="Cost" placeholder="Enter Cost per day" validate type="number" value={ticketData.ticketCost} onChange={(e) => setTicketData({ ...ticketData, ticketCost : e.target.value })} />
+                    <span id="warning7" hidden>This field is required!</span><br /><br />
+                    <Button node="button" type="reset" waves="light">Clear<Icon right>refresh</Icon></Button>
+                    { 
+                        currentId ? 
+                            <>
+                                <Button 
+                                    id="editButton" 
+                                    node="button" 
+                                    type="submit" 
+                                    waves="light" 
+                                    disabled={ (user?.result?.googleId === ticket?.ticketCreator || user?.result._id === ticket.ticketCreator) ? false : true }
+                                >
+                                    Edit<Icon right>edit</Icon>
+                                </Button>
+                                &nbsp;
+                                <span className="red-text">{ (user?.result?.googleId === ticket?.ticketCreator || user?.result._id === ticket.ticketCreator) ? null : `You don't have permission to edit the details of this ticket` }</span>
+                            </>
+                        : 
+                        currentDeleteId ?
+                            <>
+                                <Button 
+                                    id="deleteButton" 
+                                    node="button" 
+                                    type="submit" 
+                                    waves="light" 
+                                    disabled={ (user?.result?.googleId === ticketDel?.ticketCreator || user?.result._id === ticketDel.ticketCreator) ? false : true }
+                                >
+                                    Delete<Icon right>delete</Icon>
+                                </Button>
+                                &nbsp;
+                                <span className="red-text">{ (user?.result?.googleId === ticketDel?.ticketCreator || user?.result._id === ticketDel.ticketCreator) ? null : `You don't have permission to delete this ticket` }</span>
+                            </>
+                        :
+                            <Button id="submitButton" node="button" type="submit" waves="light">
+                                Submit<Icon right>send</Icon>
+                            </Button>
+                    }
+                </form>
+                <br />
             </div>
         )
     );

@@ -2,7 +2,7 @@ import HotelDetails from '../models/HotelDetails.js'
 
 export const getHotels = async (req, res) => {
     try {
-        const hotelDetails = await HotelDetails.find();
+        const hotelDetails = await HotelDetails.find().sort({ hotelID: -1 });
 
         res.status(200).json(hotelDetails);
     } catch (error) {
@@ -13,7 +13,7 @@ export const getHotels = async (req, res) => {
 export const postHotel = async (req, res) => {
     const hotel = req.body; 
 
-    const newHotel = new HotelDetails(hotel);
+    const newHotel = new HotelDetails({ ...hotel, hotelCreator: req.userId, hotelCreatedAt: new Date().toISOString() });
     try {
         await newHotel.save();
         res.status(201).json(newHotel);
@@ -30,7 +30,7 @@ export const updateHotel = async (req, res) => {
         return res.status(404).send('No Hotel with that ID');
     } else {
         const selectedHotel = await HotelDetails.find({hotelID: hID}).select('_id');
-        const updatedHotel = await HotelDetails.findByIdAndUpdate(selectedHotel, hotel, { new: true });
+        const updatedHotel = await HotelDetails.findByIdAndUpdate(selectedHotel, { ...hotel, hotelCreator: req.userId, hotelCreatedAt: new Date().toISOString() }, { new: true });
         res.json(updatedHotel);
     }
 }

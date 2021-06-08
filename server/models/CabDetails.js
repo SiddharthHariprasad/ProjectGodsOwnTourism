@@ -10,6 +10,9 @@ const cabSchema = mongoose.Schema({
 	driverPhoto: String,
 	driverAvailability : [String],
 	driverCost: Number,
+	cabCreatorName: String,
+	cabCreator: String,
+	cabCreatedAt: { type: Date, default: new Date() }
 });
 
 const CabDetail = mongoose.model('CabDetail', cabSchema);

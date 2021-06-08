@@ -2,7 +2,7 @@ import OrderDetails from '../models/OrderDetails.js'
 
 export const getOrders = async (req, res) => {
     try {
-        const orderDetails = await OrderDetails.find();
+        const orderDetails = await OrderDetails.find().sort({ orderID: -1 });
 
         res.status(200).json(orderDetails);
     } catch (error) {

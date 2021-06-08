@@ -9,6 +9,9 @@ const ticketSchema = mongoose.Schema({
 	date: String,
 	time: String, 
 	ticketCost: Number,
+	ticketCreatorName: String,
+	ticketCreator: String,
+	ticketCreatedAt: { type: Date, default: new Date() }
 });
 
 const TicketDetail = mongoose.model('TicketDetail', ticketSchema);

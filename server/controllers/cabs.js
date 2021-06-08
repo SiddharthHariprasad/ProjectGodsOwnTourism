@@ -2,7 +2,7 @@ import CabDetails from '../models/CabDetails.js'
 
 export const getCabs = async (req, res) => {
     try {
-        const cabDetails = await CabDetails.find();
+        const cabDetails = await CabDetails.find().sort({ cabID: -1 });
 
         res.status(200).json(cabDetails);
     } catch (error) {
@@ -13,7 +13,7 @@ export const getCabs = async (req, res) => {
 export const postCab = async (req, res) => {
     const cab = req.body; 
 
-    const newCab = new CabDetails(cab);
+    const newCab = new CabDetails({ ...cab, cabCreator: req.userId, cabCreatedAt: new Date().toISOString() });
     try {
         await newCab.save();
         res.status(201).json(newCab);
@@ -30,7 +30,7 @@ export const updateCab = async (req, res) => {
         return res.status(404).send('No Cab with that ID');
     } else {
         const selectedCab = await CabDetails.find({cabID: cID}).select('_id');
-        const updatedCab = await CabDetails.findByIdAndUpdate(selectedCab, cab, { new: true });
+        const updatedCab = await CabDetails.findByIdAndUpdate(selectedCab, { ...cab, cabCreator: req.userId, cabCreatedAt: new Date().toISOString() }, { new: true });
         res.json(updatedCab);
     }
 }

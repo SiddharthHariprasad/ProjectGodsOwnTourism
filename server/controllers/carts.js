@@ -2,7 +2,7 @@ import CartDetails from '../models/CartDetails.js'
 
 export const getCarts = async (req, res) => {
     try {
-        const cartDetails = await CartDetails.find();
+        const cartDetails = await CartDetails.find().sort({ cartID: -1 });
 
         res.status(200).json(cartDetails);
     } catch (error) {

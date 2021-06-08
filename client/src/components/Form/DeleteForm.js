@@ -1,43 +1,38 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteCab } from '../../actions/cabs';
-import { deleteGuide } from '../../actions/guides';
-import { deleteHotel } from '../../actions/hotels';
-import { deletePack } from '../../actions/packs';
-import { deleteTicket } from '../../actions/tickets';
+import { useHistory } from 'react-router-dom';
+import { TextInput, Select, Button, Icon, Card } from 'react-materialize'; 
 
-const DeleteForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) => {
+const DeleteForm = ( { currentDeleteId, setCurrentDeleteId, currentDeleteRoomId, setCurrentDeleteRoomId } ) => {
 
-    const dispatch = useDispatch();
+    const history = useHistory();
 
     const [deleteData, setDeleteData] = useState({
         deleteID: '', deleteCategory: '', roomDeleteID: ''
     });
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (deleteData.deleteID) {
-            var confirmed = window.confirm(`Are you sure you want to delete ${deleteData.deleteCategory} with ID ${deleteData.deleteID}? If deleted it can't be reverse.`);
-            if (confirmed) {
-                switch(deleteData.deleteCategory) {
-                    case "package":
-                        dispatch(deletePack(deleteData.deleteID));
-                        break;
-                    case "ticket":
-                        dispatch(deleteTicket(deleteData.deleteID));
-                        break;
-                    case "hotel":
-                        document.getElementById('roomIDForm').removeAttribute('hidden');
-                        break;
-                    case "cab":
-                        dispatch(deleteCab(deleteData.deleteID));
-                        break;
-                    case "guide":
-                        dispatch(deleteGuide(deleteData.deleteID));
-                        break;
-                    default: break;
-                }
+            switch(deleteData.deleteCategory) {
+                case "package":
+                    history.push('/FormPack');
+                    break;
+                case "ticket":
+                    history.push('/FormTicket');
+                    break;
+                case "hotel":
+                    document.getElementById('roomIDForm').removeAttribute('hidden');
+                    break;
+                case "cab":
+                    history.push('/FormCab');
+                    break;
+                case "guide":
+                    history.push('/FormGuide');
+                    break;
+                default: break;
             }
         } else {
             const warning = document.getElementById('warning');
@@ -52,7 +47,7 @@ const DeleteForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} 
             const warningID = 'warning1';
             const warning = document.getElementById(warningID);
             warning.setAttribute('hidden','');
-            dispatch(deleteHotel(deleteData.deleteID, deleteData.roomDeleteID));   
+            history.push('/FormHotel');
         } else {
             const warningID = 'warning1';
             const warning = document.getElementById(warningID);
@@ -60,49 +55,48 @@ const DeleteForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} 
             warning.removeAttribute('hidden');
         }
     }
-
-    return (
-        <div id="main-content">
-            <div className="container deleteFormPage">
-                <h1 className="center">Delete Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
-                    <div className="input-field">
-                        <label htmlFor="deleteID">Enter ID</label>
-                        <input placeholder="Enter ID of Object to Delete" className="validate" id="deleteID" type="text" value={deleteData.deleteID} onChange={(e) => setDeleteData({ ...deleteData, deleteID: e.target.value.toUpperCase() })} /><br/>
-                        <span id="warning" hidden>This field is requires!</span>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="btn">Choose the category:</label><br />
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setDeleteData({ ...deleteData, deleteCategory: "package"}); setCurrentId(deleteData.deleteID);}} name="category">Packages
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setDeleteData({ ...deleteData, deleteCategory: "ticket"}); setCurrentId(deleteData.deleteID);}} name="category">Tickets
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setDeleteData({ ...deleteData, deleteCategory: "hotel"}); setCurrentId(deleteData.deleteID);}} name="category">Hotels
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setDeleteData({ ...deleteData, deleteCategory: "cab"}); setCurrentId(deleteData.deleteID);}} name="category">Cabs
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                        <button className="btn waves-effect waves-light" onClick={(e) => {setDeleteData({ ...deleteData, deleteCategory: "guide"}); setCurrentId(deleteData.deleteID);}} name="category">Guides
-                            <i className="material-icons right"></i>
-                        </button>&nbsp;
-                    </div>
-                </form>
-                <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFormSubmit}>
-                <div className="input-field">
-                        <label htmlFor="roomDeleteID">Enter Room ID</label>
-                        <input placeholder="Enter ID of Room to Delete" className="validate" id="roomDeleteID" type="text" value={deleteData.roomDeleteID} onChange={(e) => setDeleteData({ ...deleteData, roomDeleteID: e.target.value.toUpperCase() })} /><br/>
-                        <span id="warning1" hidden>This field is required!</span>
-                    </div>
-                    <div className="input-field">
-                        <button className="btn waves-effect waves-light" onClick={(e) => setCurrentRoomId(deleteData.roomDeleteID)} name="submit" type="submit">Submit
-                            <i className="material-icons right">send</i>
-                        </button>&nbsp;
-                    </div>
-                </form>
+    
+    if (!user) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In</a>]}>
+                        <span>Please Login to Proceed</span>
+                    </Card>
+                </div>
             </div>
+        )
+    }
+    
+    return (
+        <div id="main-content" className="container deleteFormPage">
+            <h1 className="center">Delete Form</h1>
+            <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                <TextInput placeholder="Enter ID of Object to Delete" id="deleteID" label="ID" validate value={deleteData.deleteID} onChange={(e) => setDeleteData({ ...deleteData, deleteID: e.target.value.toUpperCase() })} />
+                <span id="warning" hidden>This field is required!</span><br /><br />
+                <Select
+                    id="category"
+                    label="Choose the category"
+                    multiple={false}
+                    options={{ classes: '', dropdownOptions: { alignment: 'left', autoTrigger: true, closeOnClick: true, constrainWidth: true, coverTrigger: true, hover: false, inDuration: 150, onCloseEnd: null, onCloseStart: null, onOpenEnd: null, onOpenStart: null, outDuration: 250 }}}
+                    onChange={(e) => {setDeleteData({ ...deleteData, deleteCategory: e.target.value}); setCurrentDeleteId(deleteData.deleteID);}}
+                    >
+                        <option value="">Select One</option>
+                        <option value="package">Packages</option>
+                        <option value="ticket">Tickets</option>
+                        <option value="hotel">Hotels</option>
+                        <option value="cab">Cabs</option>
+                        <option value="guide">Guides</option>
+                </Select>
+                <Button id="submitButton" node="button" type="submit" waves="light">Submit<Icon right>send</Icon></Button>
+            </form>
+            <br />
+            <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFormSubmit}>
+                <TextInput id="roomDeleteID" label="Room ID" placeholder="Enter ID of Room to Delete" validate value={deleteData.roomDeleteID} onChange={(e) => setDeleteData({ ...deleteData, roomDeleteID: e.target.value.toUpperCase() })}/>
+                <span id="warning1" hidden>This field is required!</span><br /><br />
+                <Button id="roomSubmitButton" node="button" type="submit" waves="light" onClick={(e) => setCurrentDeleteRoomId(deleteData.roomDeleteID)}>Submit<Icon right>send</Icon></Button>
+            </form>
+            <br />
         </div>
     );
 }

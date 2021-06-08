@@ -7,6 +7,7 @@ import guides from './guides'
 import users from './users';
 import carts from './carts';
 import orders from './orders';
+import authReducer from './auth'
 
 
-export default combineReducers({ packs, tickets, hotels, cabs, guides, users, carts, orders });
+export default combineReducers({ packs, tickets, hotels, cabs, guides, users, carts, orders, authReducer });

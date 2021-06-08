@@ -9,6 +9,9 @@ const guideSchema = mongoose.Schema({
 	guidePhoto: String,
 	guideAvailability : [String],
 	guideCost: Number,
+	guideCreatorName: String,
+	guideCreator: String,
+	guideCreatedAt: { type: Date, default: new Date() }
 });
 
 const GuideDetail = mongoose.model('GuideDetail', guideSchema);

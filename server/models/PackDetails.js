@@ -11,6 +11,9 @@ const packSchema = mongoose.Schema({
 	packPhoto: String,
 	packAvailability : [String],
 	packCost: Number,
+	packCreatorName: String,
+	packCreator: String,
+	packCreatedAt: { type: Date, default: new Date() }
 });
 
 const PackDetail = mongoose.model('PackDetail', packSchema);

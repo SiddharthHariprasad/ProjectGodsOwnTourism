@@ -1,29 +1,24 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Card, CardTitle, Icon } from 'react-materialize';
 
 const Guide = ({ guide }) => {
     return (
-        <div className="card black teal-text">
-            <div className="card-image">
-                <img alt="guide" src={guide.guidePhoto} height="340px" />
-            </div>
-            <div className="card-content guide">
-                <span className="card-title white-text">{guide.guideName}</span>
-                <ul>
-                    <li><b>Languages Known: </b> {guide.guideLanguages}</li>
-                    <li><b>Experience: </b> {guide.guideExperience} years</li>
-                    <li><b>Age:</b> {guide.guideAge}</li>
-                    <li><b>Availability: </b> {guide.guideAvailability}</li>
-                    <li className="white-text"><b>Cost: &#8377;{guide.guideCost}/8hrs</b></li>
-                </ul>
-            </div>
-            <div className="card-action">
-                <Link to="#" className="teal-text">
-                    <i className="material-icons small">add_shopping_cart</i>
-                    Add to Cart
-                </Link>
-            </div>
-        </div>
+        <Card 
+            className="black teal-text text-accent-4 left-align"
+            actions={[
+                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+            ]}
+            header={<CardTitle image={guide.guidePhoto}></CardTitle>}
+        >
+            <h4 className="white-text">{guide.guideName}</h4>
+            <ul className="guide">
+                <li><b>Languages Known: </b><br />{guide.guideLanguages.map((language) => (<span key={language}>&#128483;{language}&nbsp;</span>))}</li>
+                <li><b>Experience: </b> {guide.guideExperience} years</li>
+                <li><b>Age: </b> {guide.guideAge}</li>
+                <li><b>Availability: </b> {guide.guideAvailability.map((availability) => (<span key={availability}>&#128197;{availability}&nbsp;</span>))}</li>
+                <li className="white-text"><b>Cost: &#8377;{guide.guideCost}/8hrs</b></li>
+            </ul>
+        </Card>
     );
 };
 
