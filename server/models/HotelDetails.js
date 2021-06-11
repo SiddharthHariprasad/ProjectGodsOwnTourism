@@ -13,7 +13,7 @@ const hotelSchema = mongoose.Schema({
 	roomPhoto: String,
 	hotelCreatorName: String,
 	hotelCreator: String,
-	cabCreatedAt: { type: Date, default: new Date() }
+	hotelCreatedAt: { type: Date, default: new Date() }
 });
 
 const HotelDetail = mongoose.model('HotelDetail', hotelSchema);

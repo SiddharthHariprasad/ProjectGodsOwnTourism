@@ -33,7 +33,18 @@ p, footer a,.footer-copyright {
 .authPage {
     align-items: center;
     text-align: center;
-    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.cartPage {
+    align-items: center;
+    text-align: center;
+    padding-bottom: 10%;
+}
+
+.orderPage {
+    align-items: center;
+    text-align: center;
     padding-bottom: 10%;
 }
 

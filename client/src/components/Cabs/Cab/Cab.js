@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardTitle, Icon } from 'react-materialize';
+import { useDispatch } from 'react-redux';
+import { putCart } from '../../../actions/carts';
+
 
 const Cab = ({ cab }) => {
+
+    const [cartData] = useState({
+        cartCategory: 'cab', cabID: cab.cabID, driverName: cab.driverName, carModel: cab.carModel, driverLanguages: cab.driverLanguages, driverExperience: cab.driverExperience, driverAge: cab.driverAge, driverAvailability: cab.driverAvailability, driverCost: cab.driverCost
+    });
+
+    const dispatch = useDispatch();
+    
+
+    const addToCart = () => {
+        dispatch(putCart(cartData));
+        alert(`Cab with ID ${cab.cabID} has been added to cart.`);
+        window.open("/Cabs","_self");
+    }
+
     return (
         <Card 
             className="black teal-text text-accent-4 left-align"
             actions={[
-                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+                <a href="#!" className="teal-text text-accent-1" key="1" onClick={addToCart}><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
             ]}
             header={<CardTitle image={cab.driverPhoto}></CardTitle>}
         >
             <h4 className="white-text">{cab.driverName}</h4>
+            <h6 className="white-text">Cab ID - {cab.cabID}</h6>
             <ul className="cab">
                 <li><b>Car: </b>{cab.carModel}</li>
                 <li><b>Languages Known: </b><br/>{cab.driverLanguages.map((language) => (<span key={language}>&#128483;{language}&nbsp;</span>))}</li>

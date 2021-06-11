@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-// import { getUsers } from './actions/users';
-// import { getCarts } from './actions/carts';
-// import { getOrders } from './actions/orders';
 
 // Import all page components here
 import MainPage from './MainPage';
@@ -23,8 +18,8 @@ import FormGuide from './Form/FormGuide';
 import Auth from './Form/Auth';
 import EditForm from './Form/EditForm';
 import DeleteForm from './Form/DeleteForm';
-// import FormCart from './components/Form/FormCart';
-// import FormOrder from './components/Form/FormOrder';
+import Cart from './Carts/Carts';
+import Order from './Orders/Orders';
 
 // All routes go here. Don't forget to import the components above after adding new route.
 
@@ -34,14 +29,6 @@ const Main = () => {
     const [currentDeleteId, setCurrentDeleteId] = useState(null);
     const [currentDeleteRoomId, setCurrentDeleteRoomId] = useState(null);
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        // dispatch(getUsers());
-        // dispatch(getCarts());
-        // dispatch(getOrders());
-    }, [dispatch]);
-
     return (
         <Switch>
             <Route exact path="/" component={MainPage}></Route>
@@ -50,6 +37,8 @@ const Main = () => {
             <Route path="/Hotels" component={Hotels}></Route>
             <Route path="/Cabs" component={Cabs}></Route>
             <Route path="/Guides" component={Guides}></Route>
+            <Route path="/Cart" component={Cart}></Route>
+            <Route path="/Order" component={Order}></Route>
             <Route path="/AboutUs" component={AboutUs}></Route>
             <Route path="/FormPack">
                 <FormPack currentId={currentId} setCurrentId={setCurrentId} currentDeleteId={currentDeleteId} setCurrentDeleteId={setCurrentDeleteId} />
@@ -73,8 +62,6 @@ const Main = () => {
                 <DeleteForm currentDeleteId={currentDeleteId} setCurrentDeleteId={setCurrentDeleteId} currentDeleteRoomId={currentDeleteRoomId} setCurrentDeleteRoomId={setCurrentDeleteRoomId} />
             </Route>
             <Route path="/Auth" component={Auth}></Route>
-            {/* <Route path="/FormCart" component={FormCart}></Route> */}
-            {/* <Route path="/FormOrder" component={FormOrder}></Route> */}
             <Route component={ErrorPage}></Route>
         </Switch>
     );

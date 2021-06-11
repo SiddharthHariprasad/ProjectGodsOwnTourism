@@ -6,7 +6,6 @@ export const signin = (userData, history) => async (dispatch) => {
     
     try {
         const { data } = await api.signIn(userData);
-        console.log(data);
         dispatch({ type: AUTH, payload: data });
 
         history.push('/');

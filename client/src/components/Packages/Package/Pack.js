@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardTitle, Icon } from 'react-materialize';
+import { useDispatch } from 'react-redux';
+import { putCart } from '../../../actions/carts';
+
 
 const Pack = ({ pack }) => {
+
+    const [cartData] = useState({
+        cartCategory: 'pack', packID: pack.packID, packName: pack.packName, packDetails: pack.packDetails, ticketID: pack.ticketID, hotelID: pack.hotelID, roomID: pack.roomID, cabID: pack.cabID, guideID: pack.guideID, packCost: pack.packCost, packAvailability: pack.packAvailability
+    });
+
+    const dispatch = useDispatch();
+
+    const addToCart = () => {
+        dispatch(putCart(cartData));
+        alert(`Package with ID ${pack.packID} has been aded to cart.`);
+        window.open("/Packages", "_self");
+    }
     return (
         <Card
             className="black teal-text text-accent-4"
@@ -16,14 +31,19 @@ const Pack = ({ pack }) => {
                         <li><b>Room ID: </b>{pack.roomID}</li>
                         <li><b>Cab ID: </b>{pack.cabID}</li>
                         <li><b>Guide ID: </b>{pack.guideID}</li>
-                    <li><b>Availability: </b>{pack.packAvailability}</li>
-                    <li className="white-text"><b>Cost: &#8377;{pack.packCost}</b></li>
-                </ul>
+                        <li><b>Availability: </b>{pack.packAvailability}</li>
+                        <li className="white-text"><b>Cost: &#8377;{pack.packCost}</b></li>
+                    </ul>
                 </>}
             revealIcon={<Icon>more_vert</Icon>}
-            title={pack.packName}
+            title={
+                <>
+                    {pack.packName}
+                    <h6 className="white-text">Package ID - {pack.packID}</h6>
+                </>
+            }
             actions={[
-                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+                <a href="#!" className="teal-text text-accent-1" key="1" onClick={addToCart}><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
             ]}
             >
                <span>{pack.packDetails}</span> 

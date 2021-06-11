@@ -21,6 +21,7 @@ function Cabs() {
             </div>
         : (
             <div id="main-content" className="container">
+                <span id="addSuccess" hidden={true}>Item successfully added to cart.</span>
                 <h1 className="center">Cabs</h1>
                 <Row>
                     {cabs.map((cab) => (

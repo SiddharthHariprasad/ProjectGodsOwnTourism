@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Icon } from 'react-materialize';
+import { useDispatch } from 'react-redux';
+import { putCart } from '../../../actions/carts';
+
 
 const Ticket = ({ ticket }) => {
+
+    const [cartData] = useState({
+        cartCategory: 'ticket', ticketID: ticket.ticketID, ticketType: ticket.ticketType, departure: ticket.departure, destination: ticket.destination, seatsAvailable: ticket.seatsAvailable, date: ticket.date, time: ticket.time, ticketCost: ticket.ticketCost
+    });
+
+    const dispatch = useDispatch();
+
+    const addToCart = () => {
+        dispatch(putCart(cartData));
+        alert(`Ticket with ID ${ticket.ticketID} has been added to cart.`);
+        window.open("/Tickets", "_self");
+    }
+
     return (
         <Card
             actions={[
-                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+                <a href="#!" className="teal-text text-accent-1" key="1" onClick={addToCart}><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
             ]}
             className="black"
             textClassName="white-text"
@@ -15,6 +31,7 @@ const Ticket = ({ ticket }) => {
                 <br />
                 <span className="white-text ticketType"><b>(&nbsp;{ticket.ticketType}&nbsp;)</b></span><br />
             </div>
+            <h6 className="white-text">Ticket ID - {ticket.ticketID}</h6>
             <div className="teal-text">
                 <span><b>Departure Date: </b> {ticket.date} </span><br />
                 <span><b>Departure Time: </b> {ticket.time} </span><br />

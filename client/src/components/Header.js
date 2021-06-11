@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Dropdown, Icon, Navbar, NavItem } from 'react-materialize';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import decode from 'jwt-decode';
 import person from './images/person.png'
 
 const Header = () => {
@@ -20,11 +21,18 @@ const Header = () => {
     };
 
     useEffect(() => {
-        // const token = user?.token;
+        const token = user?.token;
 
-        //JWT
+        if (token) {
+            const decodedToken = decode(token);
+
+            if (decodedToken.exp * 1000 < new Date().getTime()) {
+                logout();
+            }
+        }
 
         setUser(JSON.parse(localStorage.getItem('profile')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
     return(
@@ -94,7 +102,8 @@ const Header = () => {
                                 // <NavItem href="/auth" className="waves-effect waves-light">Sign In</NavItem>
                                 <Button href="/Auth" node="a" waves="teal">Sign In</Button>
                                 )
-                            }
+                    }
+                    <NavItem href="/Cart" className="waves-effect waves-light"><Icon>shopping_cart</Icon></NavItem>
                 </Navbar>
             </div>
         </header>

@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardTitle, Icon } from 'react-materialize';
+import { useDispatch } from 'react-redux';
+import { putCart } from '../../../actions/carts';
 
 const Hotel = ({ hotel }) => {
+
+    const [cartData] = useState({
+        cartCategory: 'hotel', hotelID: hotel.hotelID, roomID: hotel.roomID, hotelName: hotel.hotelName, hotelDetails: hotel.hotelDetails, roomType: hotel.roomType, facilities: hotel.facilities, roomAvailability: hotel.roomAvailability, roomCost: hotel.roomCost
+    });
+
+    const dispatch = useDispatch();
+
+    const addToCart = () => {
+        dispatch(putCart(cartData));
+        alert(`Room with ID ${hotel.roomID} from Hotel with ID ${hotel.roomID} has been added to cart.`);
+        window.open("/Hotels","_self");
+    }
     
     return (
         <Card
@@ -15,9 +29,14 @@ const Hotel = ({ hotel }) => {
                     <span className="white-text"><b>Cost: &#8377;{hotel.roomCost}</b></span>
                 </>}
             revealIcon={<Icon>more_vert</Icon>}
-            title={`${hotel.roomType} Room`}
+            title={
+                <>
+                    {hotel.roomType} Room
+                    <h6 className="white-text">Hotel ID - {hotel.hotelID} | Room ID - {hotel.roomID}</h6>
+                </>
+            }
             actions={[
-                <a href="#!" className="teal-text text-accent-4" key="1"><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
+                <a href="#!" className="teal-text text-accent-1" key="1" onClick={addToCart}><Icon>add_shopping_cart</Icon>&nbsp;Add to Cart</a>
             ]}
             >
                 {hotel.hotelDetails}

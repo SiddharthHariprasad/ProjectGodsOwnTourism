@@ -2,7 +2,7 @@ import TicketDetails from '../models/TicketDetails.js'
 
 export const getTickets = async (req, res) => {
     try {
-        const ticketDetails = await TicketDetails.find().sort({ ticketsID: -1 });
+        const ticketDetails = await TicketDetails.find().sort({ ticketID: -1 });
 
         res.status(200).json(ticketDetails);
     } catch (error) {
