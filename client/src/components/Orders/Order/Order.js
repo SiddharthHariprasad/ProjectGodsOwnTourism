@@ -3,6 +3,13 @@ import { Card } from 'react-materialize';
 
 const Order = ({ order }) => {
 
+    const startDate = new Date(order.orderStartDate);
+    const endDate = new Date(order.orderEndDate);
+    const startDateString = `${startDate.getDate().toString()}/${startDate.getMonth()}/${startDate.getFullYear()}`;
+    const endDateString = `${endDate.getDate().toString()}/${endDate.getMonth()}/${endDate.getFullYear()}`;
+    const startTimeString = startDate.toLocaleTimeString();
+    const endTimeString = endDate.toLocaleTimeString();
+
     const cab = () => {
         return(
             <div>
@@ -110,12 +117,16 @@ const Order = ({ order }) => {
     return(
         <Card
             className="black teal-text text-accent-4 left-align"
-            // actions={[
-            //     <a href="#!" className="teal-text text-accent-1" key="1" onClick={deleteOrder}><Icon>close</Icon> Cancel Order</a>
-            // ]}
             title={<>{order.orderCategory.slice(0,1).toUpperCase()}{order.orderCategory.slice(1)} ID - {titleSelector()}</>}
         >
             {selector()}
+            {order.orderCategory !== 'ticket'? 
+                <>
+                    <b className="white-text">From</b> {startDateString} <b className="white-text">at</b> {startTimeString}<br />
+                    <b className="white-text">To</b> {endDateString} <b className="white-text">at</b> {endTimeString}
+                </>
+                :null
+            }
         </Card>
     );
 

@@ -69,11 +69,23 @@ const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) 
         )
     }
 
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div id="main-content">
             <div className="container editFormPage">
                 <h1 className="center">Edit Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                     <TextInput id="editID" label="ID" placeholder="Enter ID of Object to Edit" validate value={editData.editID} onChange={(e) => setEditData({ ...editData, editID: e.target.value.toUpperCase() })} />
                     <span id="warning" hidden>This field is requires!</span><br /><br/>
                     <Select
@@ -93,7 +105,7 @@ const EditForm = ( {currentId, setCurrentId, currentRoomId, setCurrentRoomId} ) 
                     <Button node="button" type="submit" waves="light">Submit<Icon right>send</Icon></Button>
                 </form>
                 <br />
-                <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFormSubmit}>
+                <form hidden id="roomIDForm" autoComplete="off" noValidate onSubmit={roomIDFormSubmit}>
                     <TextInput id="roomEditID" label="Room ID" placeholder="Enter ID of Room to Edit" validate value={editData.roomEditID} onChange={(e) => setEditData({ ...editData, roomEditID: e.target.value.toUpperCase() })}/>
                     <span id="warning1" hidden>This field is required!</span><br /><br />
                     <Button node="button" type="submit" waves="light" onClick={(e) => setCurrentRoomId(editData.roomEditID)}>Submit<Icon right>send</Icon></Button>

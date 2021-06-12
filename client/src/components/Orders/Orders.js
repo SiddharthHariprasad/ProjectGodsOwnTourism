@@ -53,6 +53,8 @@ function Orders() {
                     <div id="deleteOrderSuccess" className="success" hidden>Order cancelled successfully!</div>
                     <div id="orderSuccess" className="success" hidden>Order Placed successfully!</div>
                     <h1 className="center">Orders</h1>
+                    <h3>You will recieve an email regarding the order which will contain the payment options.</h3>
+                    <h6>You can cancel the order within 10 minutes of placing thr order. If you want to cancel the order after the 10minutes please contact the representative in the mail</h6>
                     <Row>
                         {orders.map((order) => (
                             (order.orderID === user?.result?.googleId || order.orderID === user?.result?._id) ? 

@@ -12,10 +12,16 @@ const Ticket = ({ ticket }) => {
 
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const addToCart = () => {
-        dispatch(putCart(cartData));
-        alert(`Ticket with ID ${ticket.ticketID} has been added to cart.`);
-        window.open("/Tickets", "_self");
+        if (user?.result) {
+            dispatch(putCart(cartData));
+            alert(`Ticket with ID ${ticket.ticketID} has been added to cart.`);
+            window.open("/Tickets", "_self");
+        } else {
+            alert("Please login to add to cart.");
+        }
     }
 
     return (

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Button, Col, Icon, Preloader, Row, Card } from 'react-materialize';
+import { Button, Col, Icon, Preloader, Row, Card, DatePicker, TimePicker } from 'react-materialize';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../../actions/carts';
 import { putOrder } from '../../actions/orders';
@@ -24,14 +24,26 @@ function Carts() {
         : checker
     ));
 
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const nextWeek = new Date().getDate() + 7;
+    const hours = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    const date = new Date(year, month, nextWeek, hours, minutes);
+    const newDate = new Date(year, month, nextWeek+1, hours, minutes);
+    let startDateAndTime, endDateAndTime, startDate=date, endDate=newDate, startHour=hours, startMinute=minutes, endHour=hours, endMinute=minutes;
+
     
-    const placeOrder = () => {
+    const placeOrder = (e) => {
+        e.preventDefault()
+        startDateAndTime = new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate(),startHour,startMinute);
+        endDateAndTime = new Date(endDate.getFullYear(),endDate.getMonth(),endDate.getDate(),endHour,endMinute);
         carts.map((cart) => (
             (cart.cartID === user?.result?.googleId || cart.cartID === user?.result._id) ? 
-            dispatch(putOrder({...cart, orderCategory: cart.cartCategory, orderID: cart.cartID }))
+            dispatch(putOrder({...cart, orderCategory: cart.cartCategory, orderID: cart.cartID, orderStartDate: startDateAndTime, orderEndDate: endDateAndTime, orderEmail: user?.result?.email }))
             : null 
         ));
-        alert("Order Placed successfully!");
+        alert(`Order Placed for the dates ${startDateAndTime} to ${endDateAndTime} successfully!`);
         clear();
     }
 
@@ -74,7 +86,90 @@ function Carts() {
                                 : null 
                         ))}
                     </Row>
-                    <Button node="button" onClick={placeOrder}><Icon>shopping_bag</Icon> Place Order</Button>
+                    <form autoComplete="off" noValidate onSubmit={placeOrder}>
+                    <h5 className="left-align">Please select the date and time you want to avail the services from: </h5>
+                        <Row>
+                            <Col s={12} m={6}>
+                                <DatePicker
+                                    id="startDatePicker"
+                                    label="Start Date"
+                                    options={{
+                                        setDefaultDate: true,
+                                        defaultDate: date,
+                                        firstDay: 1,
+                                        format: 'mmmm dd, yyyy (ddd)',
+                                        i18n: {
+                                            cancel: 'Cancel', clear: 'Clear', done: 'Ok',
+                                            months: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+                                            monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+                                            nextMonth: '›', previousMonth: '‹', 
+                                            weekdays: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+                                            weekdaysAbbrev: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
+                                            weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
+                                        },
+                                        minDate: date,
+                                        onSelect: (selectedDate=date) => {startDate=selectedDate},
+                                        yearRange: 10
+                                    }}
+                                />
+                            </Col>
+                            <Col s={12} m={6}>
+                                <TimePicker
+                                    id="startTimePicker"
+                                    label="Start Time"
+                                    options={{
+                                        defaultTime: 'now',
+                                        fromNow: 0,
+                                        twelveHour: false,
+                                        i18n: { cancel: 'Cancel', clear: 'Clear', done: 'Ok' },
+                                        onSelect: (selectedHour, selectedMinute) => {startHour = selectedHour; startMinute=selectedMinute;},
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <h5 className="left-align">Please select the date and time untill which you want to avail the services: </h5>
+                        <Row>
+                            <Col s={12} m={6}>
+                                <DatePicker
+                                    id="endDatePicker"
+                                    label="End Date"
+                                    options={{
+                                        setDefaultDate: true,
+                                        defaultDate: newDate,
+                                        firstDay: 1,
+                                        format: 'mmmm dd, yyyy (ddd)',
+                                        i18n: {
+                                            cancel: 'Cancel', clear: 'Clear', done: 'Ok',
+                                            months: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+                                            monthsShort: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+                                            nextMonth: '›', previousMonth: '‹', 
+                                            weekdays: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ],
+                                            weekdaysAbbrev: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
+                                            weekdaysShort: [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
+                                        },
+                                        minDate: date,
+                                        onSelect: (selectedDate=newDate) => {endDate=selectedDate},
+                                        yearRange: 10
+                                    }}
+                                />
+                            </Col>
+                            <Col s={12} m={6}>
+                                <TimePicker
+                                    id="endTimePicker"
+                                    label="End Time"
+                                    options={{
+                                        defaultTime: 'now',
+                                        fromNow: 0,
+                                        twelveHour: false,
+                                        i18n: { cancel: 'Cancel', clear: 'Clear', done: 'Ok' },
+                                        onSelect: (selectedHour, selectedMinute) => {endHour = selectedHour; endMinute = selectedMinute;},
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <span>*These dates and times don't affect that of the ticket</span><br /><br />
+                    <Button node="button" type="submit"><Icon>shopping_bag</Icon> Place Order</Button>
+                    </form>
                 </div>
             )
         )

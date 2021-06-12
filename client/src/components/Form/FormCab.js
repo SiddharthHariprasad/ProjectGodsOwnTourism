@@ -147,6 +147,18 @@ const FormCab = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId 
         )
     }
 
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
+
     if ( currentId || currentDeleteId ) {
         if(user?.result?.googleId !== cab?.cabCreator && user?.result._id !== cab.cabCreator) {
             return (
@@ -172,7 +184,7 @@ const FormCab = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId 
                 <div id="createSuccess" className="success" hidden>Cab Created Sucessfully!</div>
                 <div id="deleteSuccess" className="success" hidden>Cab Deleted Sucessfully!</div>
                 <h1 className="center">Input Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit} onReset={clear}>
+                <form autoComplete="off" noValidate onSubmit={handleSubmit} onReset={clear}>
                     <TextInput id="cabID" label="Cab ID" placeholder="Enter Cab ID" validate value={cabData.cabID} onChange={(e) => setCabData({ ...cabData, cabID: e.target.value })} />
                     <span id="warning0" hidden>This field is required!</span><br /><br />
                     <TextInput id="driverName" label="Driver Name" placeholder="Enter Driver Name" validate value={cabData.driverName} onChange={(e) => setCabData({ ...cabData, driverName: e.target.value })} />

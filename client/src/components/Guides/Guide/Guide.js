@@ -11,10 +11,16 @@ const Guide = ({ guide }) => {
 
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const addToCart = () => {
-        dispatch(putCart(cartData));
-        alert(`Guide with ID ${guide.guideID} has been added to cart.`);
-        window.open("/Guides","_self");
+        if (user?.result) {
+            dispatch(putCart(cartData));
+            alert(`Guide with ID ${guide.guideID} has been added to cart.`);
+            window.open("/Guides","_self");
+        } else {
+            alert("Please login to add to cart.");
+        }
     }
 
     return (

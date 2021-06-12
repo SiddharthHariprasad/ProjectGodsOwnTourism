@@ -67,11 +67,23 @@ const DeleteForm = ( { currentDeleteId, setCurrentDeleteId, currentDeleteRoomId,
             </div>
         )
     }
+
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
     
     return (
         <div id="main-content" className="container deleteFormPage">
             <h1 className="center">Delete Form</h1>
-            <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+            <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <TextInput placeholder="Enter ID of Object to Delete" id="deleteID" label="ID" validate value={deleteData.deleteID} onChange={(e) => setDeleteData({ ...deleteData, deleteID: e.target.value.toUpperCase() })} />
                 <span id="warning" hidden>This field is required!</span><br /><br />
                 <Select
@@ -91,7 +103,7 @@ const DeleteForm = ( { currentDeleteId, setCurrentDeleteId, currentDeleteRoomId,
                 <Button id="submitButton" node="button" type="submit" waves="light">Submit<Icon right>send</Icon></Button>
             </form>
             <br />
-            <form hidden id="roomIDForm" autoComplete="off" noValidate className="" onSubmit={roomIDFormSubmit}>
+            <form hidden id="roomIDForm" autoComplete="off" noValidate onSubmit={roomIDFormSubmit}>
                 <TextInput id="roomDeleteID" label="Room ID" placeholder="Enter ID of Room to Delete" validate value={deleteData.roomDeleteID} onChange={(e) => setDeleteData({ ...deleteData, roomDeleteID: e.target.value.toUpperCase() })}/>
                 <span id="warning1" hidden>This field is required!</span><br /><br />
                 <Button id="roomSubmitButton" node="button" type="submit" waves="light" onClick={(e) => setCurrentDeleteRoomId(deleteData.roomDeleteID)}>Submit<Icon right>send</Icon></Button>

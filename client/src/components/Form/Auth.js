@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextInput, Button, Icon, Card, Row, Col } from 'react-materialize';
+import { TextInput, Button, Icon, Card, Row, Col, Checkbox } from 'react-materialize';
 import { GoogleLogin } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 import { signup, signin } from '../../actions/auth';
+import { SECRET_KEY } from '../../constants/secretKey';
 
 const SignUp = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -12,9 +13,8 @@ const SignUp = () => {
     const history = useHistory();
     
     const [userData, setUserData] = useState({
-        firstName: '', lastName: '', email: '', password: '', confirmPassword: ''
+        firstName: '', lastName: '', email: '', password: '', confirmPassword: '', serviceProvider: false
     });
-
 
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -23,6 +23,7 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignUp) {
+            console.log(userData);
             dispatch(signup(userData, history));
         } else {
             dispatch(signin(userData, history));
@@ -46,12 +47,13 @@ const SignUp = () => {
         }
     };
 
-    const googleFaliure = () => { console.log("Google Sign In was Unsuccessfull. Try Again Later"); };
+    const googleFaliure = () => { alert("Google Sign In was Unsuccessful. Try Again Later"); };
 
     return (
         <div id="main-content" className="authPage container" style={{ maxWidth: '50%' }}>
             <Card className="white z-depth-3" textClassName="teal-text">
                 <h4><Icon>lock</Icon><br />{isSignUp?"Sign Up":"Sign In"}</h4>
+                <span id="accountNoneExistent" className="red-text" hidden>Account Doesn't exist</span>
                 <form autoComplete="off" noValidate className="container" onSubmit={handleSubmit}>
                     {isSignUp && (
                         <>
@@ -70,6 +72,9 @@ const SignUp = () => {
                     {isSignUp && (
                         <>
                             <TextInput id="confirmPassword" name="confirmPassword" label="Confirm Password" placeholder="Enter Password Again" validate type={showPassword?'text':'password'} onChange={handleChange} />
+                            <Checkbox id="isServiceProvider" name="isServiceProvider" label="I am a service provider" value="true" onChange={(e)=> e.target.checked ? document.getElementById('serviceProviderSecretKey').removeAttribute('hidden'): document.getElementById('serviceProviderSecretKey').setAttribute('hidden', "")} />
+                            <TextInput id="serviceProviderSecretKey" name="serviceProvider" placeholder="Enter Secret Key" hidden type={showPassword?'text':'password'} onChange={(e) => {if(e.target.value===SECRET_KEY) {document.getElementById('secretKeyError').setAttribute('hidden', ""); setUserData({ ...userData, serviceProvider: true });} else {document.getElementById('secretKeyError').removeAttribute('hidden')}}} />
+                            <span id="secretKeyError" className="red-text" hidden>Invalid Secret Key</span>
                         </>
                     )}
                     <Button flat type="" node="a" waves="light" onClick={handleShowPassword}><Icon>{showPassword?'visibility_off':'visibility'}</Icon> {showPassword?'Don\'t Show Password':'Show Password'}</Button><br /><br />

@@ -11,12 +11,17 @@ const Cab = ({ cab }) => {
     });
 
     const dispatch = useDispatch();
-    
+
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const addToCart = () => {
-        dispatch(putCart(cartData));
-        alert(`Cab with ID ${cab.cabID} has been added to cart.`);
-        window.open("/Cabs","_self");
+        if (user?.result) {
+            dispatch(putCart(cartData));
+            alert(`Cab with ID ${cab.cabID} has been added to cart.`);
+            window.open("/Cabs","_self");
+        } else {
+            alert("Please login to add to cart.");
+        }
     }
 
     return (

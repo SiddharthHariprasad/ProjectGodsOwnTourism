@@ -147,6 +147,18 @@ const FormHotel = ({ currentId, setCurrentId, currentRoomId, setCurrentRoomId, c
         )
     }
 
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
+
     if ( currentId || currentDeleteId ) {
         if(user?.result?.googleId !== hotel?.hotelCreator && user?.result._id !== hotel.hotelCreator) {
             return (
@@ -172,7 +184,7 @@ const FormHotel = ({ currentId, setCurrentId, currentRoomId, setCurrentRoomId, c
                 <div id="createSuccess" className="success" hidden>Hotel Created Sucessfully!</div>
                 <div id="deleteSuccess" className="success" hidden>Cab Deleted Sucessfully!</div>
                 <h1 className="center">Input Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                     <TextInput id="hotelID" label="Hotel ID" placeholder="Enter Hotel ID" validate value={hotelData.hotelID} onChange={(e) => setHotelData({ ...hotelData, hotelID: e.target.value })} />
                     <span id="warning0" hidden>This field is required!</span><br /><br />
                     <TextInput id="hotelName" label="Hotel Name" placeholder="Enter Hotel Name" validate value={hotelData.hotelName} onChange={(e) => setHotelData({ ...hotelData, hotelName: e.target.value })} />

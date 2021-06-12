@@ -11,10 +11,16 @@ const Hotel = ({ hotel }) => {
 
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const addToCart = () => {
-        dispatch(putCart(cartData));
-        alert(`Room with ID ${hotel.roomID} from Hotel with ID ${hotel.roomID} has been added to cart.`);
-        window.open("/Hotels","_self");
+        if (user?.result) {
+            dispatch(putCart(cartData));
+            alert(`Room with ID ${hotel.roomID} from Hotel with ID ${hotel.roomID} has been added to cart.`);
+            window.open("/Hotels","_self");
+        } else {
+            alert("Please login to add to cart.");
+        }
     }
     
     return (

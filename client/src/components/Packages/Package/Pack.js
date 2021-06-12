@@ -12,10 +12,17 @@ const Pack = ({ pack }) => {
 
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
+    
     const addToCart = () => {
-        dispatch(putCart(cartData));
-        alert(`Package with ID ${pack.packID} has been aded to cart.`);
-        window.open("/Packages", "_self");
+        if (user?.result) {
+            dispatch(putCart(cartData));
+            alert(`Package with ID ${pack.packID} has been aded to cart.`);
+            window.open("/Packages", "_self");
+        } else {
+            alert("Please login to add to cart.");
+        }
     }
     return (
         <Card

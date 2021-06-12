@@ -6,8 +6,6 @@ import decode from 'jwt-decode';
 import person from './images/person.png'
 
 const Header = () => {
-
-    // const user = { result: { name: "Siddharth", imageUrl: image } };
     
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
@@ -80,8 +78,8 @@ const Header = () => {
                             }}
                             trigger={
                                 <img 
-                                    src={user.result.imageUrl || person} 
-                                    alt={user.result.name.charAt(0)} 
+                                    src={user?.result?.imageUrl || person} 
+                                    alt={user?.result?.name.charAt(0)} 
                                     className="circle" 
                                     height="50px" 
                                     width="50px" 
@@ -95,11 +93,39 @@ const Header = () => {
                             }
                             >
                                 
-                                <span className="teal-text text-darken-4">{user.result.name}</span>
+                                <span className="teal-text text-darken-4">{user?.result?.name}</span>
                                 <Button node="button" waves="teal" onClick={logout}>Logout<Icon right>logout</Icon></Button>
+                                {user?.result?.serviceProvider ? 
+                                    <>
+                                        <a href="/EditForm" className="teal-text text-darken-4">Edit Items</a>
+                                        <a href="/DeleteForm" className="teal-text text-darken-4">Delete Item</a>
+                                        <Dropdown 
+                                            id="dropDownAdd" 
+                                            className="black"
+                                            options={{
+                                                alignment: 'left',
+                                                autoTrigger: true,
+                                                closeOnClick: true,
+                                                constrainWidth: true,
+                                                container: null,
+                                                coverTrigger: false,
+                                                hover: true,
+                                                inDuration: 150,
+                                                outDuration: 250
+                                            }}
+                                            trigger={<span className="teal-text text-darken-4">Add Items</span>}
+                                        >
+                                            <a href="/FormCab" className="teal-text text-lighten-4">Cab</a>
+                                            <a href="/FormGuide" className="teal-text text-lighten-4">Guide</a>
+                                            <a href="/FormHotel" className="teal-text text-lighten-4">Hotel</a>
+                                            <a href="/FormPack" className="teal-text text-lighten-4">Pack</a>
+                                            <a href="/FormTicket" className="teal-text text-lighten-4">Ticket</a>
+                                        </Dropdown>
+                                    </>
+                                    : null
+                                }
                         </Dropdown>
                             ) : (
-                                // <NavItem href="/auth" className="waves-effect waves-light">Sign In</NavItem>
                                 <Button href="/Auth" node="a" waves="teal">Sign In</Button>
                                 )
                     }

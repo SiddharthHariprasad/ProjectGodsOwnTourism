@@ -149,6 +149,18 @@ const FormPack = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId
         )
     }
 
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
+
     if ( currentId || currentDeleteId ) {
         if(user?.result?.googleId !== pack?.packCreator && user?.result._id !== pack.packCreator) {
             return (
@@ -174,7 +186,7 @@ const FormPack = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId
                 <div id="createSuccess" className="success" hidden>Package Created Sucessfully!</div>
                 <div id="deleteSuccess" className="success" hidden>Cab Deleted Sucessfully!</div>
                 <h1 className="center">Input Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                     <TextInput id="packID" label="Pack ID" placeholder="Enter Pack ID" validate value={packData.packID} onChange={(e) => setPackData({ ...packData, packID: e.target.value })} />
                     <span id="warning0" hidden>This field is required!</span><br /><br />
                     <TextInput id="packName" label="Pack Name" placeholder="Enter Pack Name" validate value={packData.packName} onChange={(e) => setPackData({ ...packData, packName: e.target.value })} />

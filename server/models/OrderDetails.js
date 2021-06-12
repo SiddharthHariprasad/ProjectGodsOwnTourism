@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 const orderSchema = mongoose.Schema({
     orderID: String,
 	orderCategory: String,
+	orderStartDate: Date,
+	orderEndDate: Date,
+	orderEmail: String,
 	orderCreatedAt: { type: Date, default: new Date() },
 
 	cabID: String,

@@ -124,7 +124,7 @@ const FormGuide = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteI
             if (guideExistCheck) {
                 alert('Guide with the same Guide ID already exists, if you want to update please go to /EditForm, if you want to delete please go to /DeleteForm');
             } else {
-                dispatch(putGuide({ ...guideData, guidedCreatorName: user?.result?.name }));
+                dispatch(putGuide({ ...guideData, guideCreatorName: user?.result?.name }));
                 createSuccess.removeAttribute('hidden');
                 setTimeout(() => {createSuccess.setAttribute('hidden',""); clear();}, 3000);
             }
@@ -145,6 +145,18 @@ const FormGuide = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteI
                 </div>
             </div>
         )
+    }
+
+    if (!user?.result?.serviceProvider) {
+        return(
+            <div id="main-content" className="container errorPage">
+                <div className="container">
+                    <Card className="black" textClassName="teal-text text-accent-3" title="Authentication Required" actions={[<a className="white-text btn btn-large" key="1" href="/auth">Sign In with another Account</a>]}>
+                        <span>You don't have the permission to view this page</span>
+                    </Card>
+                </div>
+            </div>
+        );
     }
 
     if ( currentId || currentDeleteId ) {
@@ -173,7 +185,7 @@ const FormGuide = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteI
                 <div id="createSuccess" className="success" hidden>Guide Created Sucessfully!</div>
                 <div id="deleteSuccess" className="success" hidden>Guide Deleted Sucessfully!</div>
                 <h1 className="center">Input Form</h1>
-                <form autoComplete="off" noValidate className="" onSubmit={handleSubmit}>
+                <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                     <TextInput id="guideID" label="Guide ID" placeholder="Enter Guide ID" validate value={guideData.guideID} onChange={(e) => setGuideData({ ...guideData, guideID: e.target.value })} />
                     <span id="warning0" hidden>This field is required!</span><br /><br />
                     <TextInput id="guideName" label="Guide Name" placeholder="Enter Guide Name" validate value={guideData.guideName} onChange={(e) => setGuideData({ ...guideData, guideName: e.target.value })} />
