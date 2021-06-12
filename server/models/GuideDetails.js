@@ -9,6 +9,7 @@ const guideSchema = mongoose.Schema({
 	guidePhoto: String,
 	guideAvailability : [String],
 	guideCost: Number,
+	guideLocation: String,
 	guideCreatorName: String,
 	guideCreator: String,
 	guideCreatedAt: { type: Date, default: new Date() }

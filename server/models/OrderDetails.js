@@ -13,6 +13,7 @@ const orderSchema = mongoose.Schema({
 	driverAge: Number,
 	driverAvailability : [String],
 	driverCost: Number,
+	driverLocation: String,
 
 	guideID: String,
 	guideName: String,
@@ -21,6 +22,7 @@ const orderSchema = mongoose.Schema({
 	guideAge: Number,
 	guideAvailability : [String],
 	guideCost: Number,
+	guideLocation: String,
 	
 	packID: String,
 	packName: String,

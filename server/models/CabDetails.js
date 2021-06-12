@@ -10,6 +10,7 @@ const cabSchema = mongoose.Schema({
 	driverPhoto: String,
 	driverAvailability : [String],
 	driverCost: Number,
+	driverLocation: String,
 	cabCreatorName: String,
 	cabCreator: String,
 	cabCreatedAt: { type: Date, default: new Date() }

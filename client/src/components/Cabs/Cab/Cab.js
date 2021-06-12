@@ -7,7 +7,7 @@ import { putCart } from '../../../actions/carts';
 const Cab = ({ cab }) => {
 
     const [cartData] = useState({
-        cartCategory: 'cab', cabID: cab.cabID, driverName: cab.driverName, carModel: cab.carModel, driverLanguages: cab.driverLanguages, driverExperience: cab.driverExperience, driverAge: cab.driverAge, driverAvailability: cab.driverAvailability, driverCost: cab.driverCost
+        cartCategory: 'cab', cabID: cab.cabID, driverName: cab.driverName, carModel: cab.carModel, driverLanguages: cab.driverLanguages, driverExperience: cab.driverExperience, driverAge: cab.driverAge, driverAvailability: cab.driverAvailability, driverCost: cab.driverCost, driverLocation: cab.driverLocation
     });
 
     const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const Cab = ({ cab }) => {
                 <li><b>Experience: </b> {cab.driverExperience} years</li>
                 <li><b>Age: </b> {cab.driverAge}</li>
                 <li><b>Availability: </b><br />{cab.driverAvailability.map((availability) => (<span key={availability}>&#128197;{availability}&nbsp;</span>))}</li>
+                <li><b>Location: </b> {cab.driverLocation}</li>
                 <li className="white-text"><b>Cost: &#8377;{cab.driverCost}/8hrs</b></li>
             </ul>
         </Card>

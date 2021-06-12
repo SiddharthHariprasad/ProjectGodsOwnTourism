@@ -7,7 +7,7 @@ import { Preloader, TextInput, Button, Icon, Card } from 'react-materialize';
 const FormGuide = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId }) => {
 
     const [guideData, setGuideData] = useState({
-        guideID: '', guideName: '', guideLanguages: '', guideExperience: '',guideAge: '', guidePhoto: '', guideAvailability: '', guideCost: '',
+        guideID: '', guideName: '', guideLanguages: '', guideExperience: '',guideAge: '', guidePhoto: '', guideAvailability: '', guideCost: '', guideLocation: ''
     });
 
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -188,8 +188,10 @@ const FormGuide = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteI
                     <span id="warning5" hidden>This field is required!</span><br /><br />
                     <TextInput id="guideCost" label="Cost" placeholder="Enter Cost per day" validate  type="number" value={guideData.guideCost} onChange={(e) => setGuideData({ ...guideData, guideCost : e.target.value })} />
                     <span id="warning6" hidden>This field is required!</span><br /><br />
-                    <FileBase type="file" multiple={false} onDone={({base64}) => setGuideData({ ...guideData, guidePhoto: base64 })} />
+                    <TextInput id="guideLanguage" label="Location" placeholder="Enter location" validate value={guideData.guideLocation} onChange={(e) => setGuideData({ ...guideData, guideLocation : e.target.value })} />
                     <span id="warning7" hidden>This field is required!</span><br /><br />
+                    <FileBase type="file" multiple={false} onDone={({base64}) => setGuideData({ ...guideData, guidePhoto: base64 })} />
+                    <span id="warning8" hidden>This field is required!</span><br /><br />
                     <Button node="button" type="reset" waves="light">Clear<Icon right>refresh</Icon></Button>
                     { 
                         currentId ? 

@@ -7,7 +7,7 @@ import { Button, Card, Icon, Preloader, TextInput } from 'react-materialize';
 const FormCab = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId }) => {
 
     const [cabData, setCabData] = useState({
-        cabID: '', driverName: '', carModel: '', driverLanguages: '', driverExperience: '',driverAge: '', driverPhoto: '', driverAvailability: '', driverCost: '',
+        cabID: '', driverName: '', carModel: '', driverLanguages: '', driverExperience: '',driverAge: '', driverPhoto: '', driverAvailability: '', driverCost: '', driverLocation: ''
     });
 
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -72,9 +72,9 @@ const FormCab = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId 
         }
 
         function validate() {
-            const fields = [cabData.cabID, cabData.driverName, cabData.carModel, cabData.driverLanguages, cabData.driverExperience, cabData.driverAge, cabData.driverPhoto, cabData.driverAvailability, cabData.driverCost]
+            const fields = [cabData.cabID, cabData.driverName, cabData.carModel, cabData.driverLanguages, cabData.driverExperience, cabData.driverAge, cabData.driverPhoto, cabData.driverAvailability, cabData.driverCost, cabData.driverLocation]
             var index = 0;
-            if(cabData.cabID && cabData.driverName && cabData.carModel && cabData.driverLanguages && cabData.driverExperience && cabData.driverAge && cabData.driverPhoto && cabData.driverAvailability && cabData.driverCost) {
+            if(cabData.cabID && cabData.driverName && cabData.carModel && cabData.driverLanguages && cabData.driverExperience && cabData.driverAge && cabData.driverPhoto && cabData.driverAvailability && cabData.driverCost && cabData.driverLocation) {
                 index = 0;
                 fields.forEach(element => {
                     if (element !== '') {
@@ -187,10 +187,12 @@ const FormCab = ({ currentId, setCurrentId, currentDeleteId, setCurrentDeleteId 
                     <span id="warning5" hidden>This field is required!</span><br /><br />
                     <TextInput id="driverAvailability" label="Availability" placeholder="Enter available days separated by commas" validate value={cabData.driverAvailability} onChange={(e) => setCabData({ ...cabData, driverAvailability: e.target.value.split(',') })} />
                     <span id="warning6" hidden>This field is required!</span><br /><br />
-                    <TextInput id="driverCost" label="Cost" placeholder="Enter Cost per day" validate  type="number" value={cabData.driverCost} onChange={(e) => setCabData({ ...cabData, driverCost : e.target.value })} />
+                    <TextInput id="driverLocation" label="Location" placeholder="Enter Location" validate value={cabData.driverLocation} onChange={(e) => setCabData({ ...cabData, driverLocation : e.target.value })} />
                     <span id="warning7" hidden>This field is required!</span><br /><br />
-                    <FileBase type="file" multiple={false} onDone={({base64}) => setCabData({ ...cabData, driverPhoto: base64 })} />
+                    <TextInput id="driverCost" label="Cost" placeholder="Enter Cost per day" validate  type="number" value={cabData.driverCost} onChange={(e) => setCabData({ ...cabData, driverCost : e.target.value })} />
                     <span id="warning8" hidden>This field is required!</span><br /><br />
+                    <FileBase type="file" multiple={false} onDone={({base64}) => setCabData({ ...cabData, driverPhoto: base64 })} />
+                    <span id="warning9" hidden>This field is required!</span><br /><br />
                     <Button node="button" type="reset" waves="light">Clear<Icon right>refresh</Icon></Button>&nbsp;
                     { 
                         currentId ? 

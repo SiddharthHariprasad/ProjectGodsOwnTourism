@@ -6,7 +6,7 @@ import { putCart } from '../../../actions/carts';
 const Guide = ({ guide }) => {
 
     const [cartData] = useState({
-        cartCategory: 'guide', guideID: guide.guideID, guideName: guide.guideName, guideLanguages: guide.guideLanguages, guideExperience: guide.guideExperience, guideAge: guide.guideAge, guideAvailability: guide.guideAvailability, guideCost: guide.guideCost
+        cartCategory: 'guide', guideID: guide.guideID, guideName: guide.guideName, guideLanguages: guide.guideLanguages, guideExperience: guide.guideExperience, guideAge: guide.guideAge, guideAvailability: guide.guideAvailability, guideCost: guide.guideCost, guideLocation: guide.guideLocation
     });
 
     const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const Guide = ({ guide }) => {
                 <li><b>Experience: </b> {guide.guideExperience} years</li>
                 <li><b>Age: </b> {guide.guideAge}</li>
                 <li><b>Availability: </b> {guide.guideAvailability.map((availability) => (<span key={availability}>&#128197;{availability}&nbsp;</span>))}</li>
+                <li><b>Location: </b> {guide.guideLocation}</li>
                 <li className="white-text"><b>Cost: &#8377;{guide.guideCost}/8hrs</b></li>
             </ul>
         </Card>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Modal, Button, Row, Col } from 'react-materialize';
 
 const Footer = () =>{
@@ -34,39 +33,39 @@ const Footer = () =>{
                         {/* heading for contact us section */}
                         <h5>Contact Us</h5>
                         {/* links to various contacting options */}
-                        <Link to="tel:+91819357648" className="btn-floating btn-small teal darken-3">
+                        <a href="tel:+91819357648" className="btn-floating btn-small teal darken-3">
                             <i className="material-icons">phone</i>
-                        </Link>
-                        <Link to="sms:+91819357648" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="sms:+91819357648" className="btn-floating btn-small teal darken-3">
                             <i className="material-icons">sms</i>
-                        </Link>
-                        <Link to="mailto:siddhuhariprasad@gmail.com" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="mailto:siddhuhariprasad@gmail.com" className="btn-floating btn-small teal darken-3">
                             <i className="material-icons">mail</i>
-                        </Link>
+                        </a>
                     </Col>
                     {/* social media section */}
                     <Col s={12} l={4} className="socials center">
                         {/* heading for social media icons */}
                         <h5>Connect with us on</h5>
                         {/* links to various social medias */}
-                        <Link to="https://www.instagram.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-instagram" />
-                        </Link>
-                        <Link to="https://www.facebook.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-facebook" />
-                        </Link>
-                        <Link to="https://twitter.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-twitter" />
-                        </Link>
-                        <Link to="https://www.youtube.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-youtube" />
-                        </Link>
-                        <Link to="https://wa.me/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="https://wa.me/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-whatsapp" />
-                        </Link>
-                        <Link to="https://t.me/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
+                        </a>
+                        <a href="https://t.me/" target="_blank" rel="noreferrer" className="btn-floating btn-small teal darken-3">
                             <i className="fab fa-telegram" />
-                        </Link>
+                        </a>
                     </Col>
                 </Row>
             </div>

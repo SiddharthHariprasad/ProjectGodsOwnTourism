@@ -28,6 +28,7 @@ const Cart = ({ cart }) => {
                     <li><b>Experience: </b> {cart.driverExperience} years</li>
                     <li><b>Age: </b> {cart.driverAge}</li>
                     <li><b>Availability: </b><br />{cart.driverAvailability.map((availability) => (<span key={availability}>&#128197;{availability}&nbsp;</span>))}</li>
+                    <li><b>Location: </b> {cart.driverLocation}</li>
                     <li className="white-text"><b>Cost: &#8377;{cart.driverCost}/8hrs</b></li>
                 </ul>
             </div>
@@ -44,6 +45,7 @@ const Cart = ({ cart }) => {
                     <li><b>Experience: </b> {cart.guideExperience} years</li>
                     <li><b>Age: </b> {cart.guideAge}</li>
                     <li><b>Availability: </b> {cart.guideAvailability.map((availability) => (<span key={availability}>&#128197;{availability}&nbsp;</span>))}</li>
+                    <li><b>Location: </b> {cart.guideLocation}</li>
                     <li className="white-text"><b>Cost: &#8377;{cart.guideCost}/8hrs</b></li>
                 </ul>
             </div>
